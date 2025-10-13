@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="78a0129c3ec54e5f89d2746f28c4021e" Name="Diagram1" ZoomLevel="82">
+        <EntityTypeShape EntityType="QuanLyCafeModel.Ban" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyCafeModel.ChiTietHoaDon" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyCafeModel.DoUong" Width="1.5" PointX="3" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyCafeModel.HoaDon" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyCafeModel.KhachHang" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyCafeModel.LoaiDoUong" Width="1.5" PointX="0.75" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLyCafeModel.NhanVien" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <AssociationConnector Association="QuanLyCafeModel.FK__ChiTietHoa__MaDU__47DBAE45" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyCafeModel.FK__ChiTietHoa__MaHD__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyCafeModel.FK__DoUong__MaLoai__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyCafeModel.FK__HoaDon__MaKH__4316F928" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLyCafeModel.FK__HoaDon__MaNV__4222D4EF" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="QuanLyCafeModel.NguyenLieu" Width="1.5" PointX="5.375" PointY="4.75" />
+        <EntityTypeShape EntityType="QuanLyCafeModel.sysdiagram" Width="1.5" PointX="7.375" PointY="0.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="QuanLyCafeModel.ChiTietPhieuNhap" Width="1.5" PointX="7.625" PointY="9.125" />
+        <EntityTypeShape EntityType="QuanLyCafeModel.CongThucDoUong" Width="1.5" PointX="7.625" PointY="6.25" />
+        <EntityTypeShape EntityType="QuanLyCafeModel.PhieuNhapKho" Width="1.5" PointX="3" PointY="13.375" />
+        <AssociationConnector Association="QuanLyCafeModel.FK__ChiTietPhi__MaNL__75A278F5" />
+        <AssociationConnector Association="QuanLyCafeModel.FK__ChiTietPhi__MaPN__74AE54BC" />
+        <AssociationConnector Association="QuanLyCafeModel.FK__CongThucDo__MaDU__787EE5A0" />
+        <AssociationConnector Association="QuanLyCafeModel.FK__CongThucDo__MaNL__797309D9" />
+        <AssociationConnector Association="QuanLyCafeModel.FK__PhieuNhapK__MaNV__71D1E811" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

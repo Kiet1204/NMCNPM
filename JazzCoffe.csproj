@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E3C4EEF7-BE06-46C0-8159-4305947A8BD3}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>JazzCoffe</RootNamespace>
+    <AssemblyName>JazzCoffe</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Ban.cs">
+      <DependentUpon>CafeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CafeModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CafeModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CafeModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CafeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CafeModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CafeModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="ChiTietHoaDon.cs">
+      <DependentUpon>CafeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ChiTietPhieuNhap.cs">
+      <DependentUpon>CafeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CongThucDoUong.cs">
+      <DependentUpon>CafeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DoUong.cs">
+      <DependentUpon>CafeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fBan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fBan.Designer.cs">
+      <DependentUpon>fBan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fChiTietHoaDon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fChiTietHoaDon.Designer.cs">
+      <DependentUpon>fChiTietHoaDon.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fChiTietNhapKho.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fChiTietNhapKho.Designer.cs">
+      <DependentUpon>fChiTietNhapKho.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fCongThucDoUong.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fCongThucDoUong.Designer.cs">
+      <DependentUpon>fCongThucDoUong.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fDanhmucdouong.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fDanhmucdouong.Designer.cs">
+      <DependentUpon>fDanhmucdouong.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fDanhmucloaidouong.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fDanhmucloaidouong.Designer.cs">
+      <DependentUpon>fDanhmucloaidouong.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fDoiMatkhau.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fDoiMatkhau.Designer.cs">
+      <DependentUpon>fDoiMatkhau.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fHoaDon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fHoaDon.Designer.cs">
+      <DependentUpon>fHoaDon.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fKhachhang.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fKhachhang.Designer.cs">
+      <DependentUpon>fKhachhang.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fNguyenLieu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fNguyenLieu.Designer.cs">
+      <DependentUpon>fNguyenLieu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fNhanVien.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fNhanVien.Designer.cs">
+      <DependentUpon>fNhanVien.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fDangNhap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fDangNhap.Designer.cs">
+      <DependentUpon>fDangNhap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fNhapkho.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fNhapkho.Designer.cs">
+      <DependentUpon>fNhapkho.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HoaDon.cs">
+      <DependentUpon>CafeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KhachHang.cs">
+      <DependentUpon>CafeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoaiDoUong.cs">
+      <DependentUpon>CafeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NguyenLieu.cs">
+      <DependentUpon>CafeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NhanVien.cs">
+      <DependentUpon>CafeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PhieuNhapKho.cs">
+      <DependentUpon>CafeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>CafeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>CafeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>CafeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TableManeger.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TableManeger.Designer.cs">
+      <DependentUpon>TableManeger.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="fBan.resx">
+      <DependentUpon>fBan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fChiTietHoaDon.resx">
+      <DependentUpon>fChiTietHoaDon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fChiTietNhapKho.resx">
+      <DependentUpon>fChiTietNhapKho.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fCongThucDoUong.resx">
+      <DependentUpon>fCongThucDoUong.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fDanhmucdouong.resx">
+      <DependentUpon>fDanhmucdouong.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fDanhmucloaidouong.resx">
+      <DependentUpon>fDanhmucloaidouong.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fDoiMatkhau.resx">
+      <DependentUpon>fDoiMatkhau.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fHoaDon.resx">
+      <DependentUpon>fHoaDon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fKhachhang.resx">
+      <DependentUpon>fKhachhang.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fNguyenLieu.resx">
+      <DependentUpon>fNguyenLieu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fNhanVien.resx">
+      <DependentUpon>fNhanVien.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fDangNhap.resx">
+      <DependentUpon>fDangNhap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fNhapkho.resx">
+      <DependentUpon>fNhapkho.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="TableManeger.resx">
+      <DependentUpon>TableManeger.cs</DependentUpon>
+    </EmbeddedResource>
+    <EntityDeploy Include="CafeModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CafeModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="CafeModel.edmx.diagram">
+      <DependentUpon>CafeModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="CafeModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CafeModel.edmx</DependentUpon>
+      <LastGenOutput>CafeModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="CafeModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CafeModel.edmx</DependentUpon>
+      <LastGenOutput>CafeModel.cs</LastGenOutput>
+    </Content>
+    <None Include="Hình ảnh\unnamed.png" />
+    <None Include="Hình ảnh\20250726_1944_image.png" />
+    <None Include="Hình ảnh\1043804259b4312df644074d52b74598.jpg" />
+    <None Include="Hình ảnh\20250726_1938_image %281%29.png" />
+    <None Include="Hình ảnh\images.jpg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
