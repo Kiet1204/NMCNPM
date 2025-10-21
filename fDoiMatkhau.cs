@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace JazzCoffe
 {
@@ -19,9 +21,9 @@ namespace JazzCoffe
 
         private void btChangePassword_Click(object sender, EventArgs e)
         {
-            string oldPass = txtOldPassword.Text.Trim();
-            string newPass = txtNewPassword.Text.Trim();
-            string confirmPass = txtConfirmPassword.Text.Trim();
+            string oldPass = txtMatKhauCu.Text.Trim();
+            string newPass = txtMatKhauMoi.Text.Trim();
+            string confirmPass = txtXacNhanMK.Text.Trim();
 
             if (string.IsNullOrEmpty(oldPass) || string.IsNullOrEmpty(newPass) || string.IsNullOrEmpty(confirmPass))
             {
@@ -29,8 +31,9 @@ namespace JazzCoffe
                 return;
             }
 
-            // So sánh mật khẩu cũ nhập vào với mật khẩu hiện tại từ lần đăng nhập
-            if (oldPass != matKhauHienTai)
+            // So sánh mật khẩu cũ nhập vào (đã mã hóa) với mật khẩu hiện tại
+            string hashedOld = HashPassword(oldPass);
+            if (hashedOld != matKhauHienTai)
             {
                 MessageBox.Show("Mật khẩu cũ không chính xác!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -38,7 +41,7 @@ namespace JazzCoffe
 
             if (newPass != confirmPass)
             {
-                MessageBox.Show("Mật khẩu mới không khớp nhau!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Mật khẩu mới và xác nhận không khớp!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -48,7 +51,7 @@ namespace JazzCoffe
 
                 if (nhanVien != null)
                 {
-                    nhanVien.MatKhau = newPass;
+                    nhanVien.MatKhau = HashPassword(newPass); // 🔹 Mã hóa mật khẩu mới
                     db.SaveChanges();
 
                     MessageBox.Show("Đổi mật khẩu thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -61,6 +64,17 @@ namespace JazzCoffe
             }
         }
 
+        private string HashPassword(string password)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                StringBuilder sb = new StringBuilder();
+                foreach (byte b in bytes)
+                    sb.Append(b.ToString("x2"));
+                return sb.ToString();
+            }
+        }
         private void btnChangePasswordExit_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -68,7 +82,8 @@ namespace JazzCoffe
 
         private void fDoiMatKhau_Load(object sender, EventArgs e)
         {
-
+            txtMaNV.Text = Program.MaNV_DangNhap;
+            txtMaNV.ReadOnly = true;
         }
     }
 }

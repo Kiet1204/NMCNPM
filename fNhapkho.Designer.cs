@@ -37,8 +37,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.dtpNgayNhap = new System.Windows.Forms.DateTimePicker();
             this.btnThem = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnXoa = new System.Windows.Forms.Button();
+            this.btnSua = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.txtTongChiPhi = new System.Windows.Forms.TextBox();
@@ -62,12 +62,14 @@
             // dtgvPhieuNhapKhoTam
             // 
             this.dtgvPhieuNhapKhoTam.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtgvPhieuNhapKhoTam.Location = new System.Drawing.Point(516, 120);
+            this.dtgvPhieuNhapKhoTam.Location = new System.Drawing.Point(507, 120);
             this.dtgvPhieuNhapKhoTam.Name = "dtgvPhieuNhapKhoTam";
             this.dtgvPhieuNhapKhoTam.RowHeadersWidth = 62;
             this.dtgvPhieuNhapKhoTam.RowTemplate.Height = 28;
-            this.dtgvPhieuNhapKhoTam.Size = new System.Drawing.Size(613, 590);
+            this.dtgvPhieuNhapKhoTam.Size = new System.Drawing.Size(622, 590);
             this.dtgvPhieuNhapKhoTam.TabIndex = 1;
+            this.dtgvPhieuNhapKhoTam.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgvPhieuNhapKhoTam_CellClick);
+            this.dtgvPhieuNhapKhoTam.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgvPhieuNhapKhoTam_CellContentClick);
             // 
             // label1
             // 
@@ -128,23 +130,25 @@
             this.btnThem.UseVisualStyleBackColor = true;
             this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
             // 
-            // button2
+            // btnXoa
             // 
-            this.button2.Location = new System.Drawing.Point(654, 716);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(116, 43);
-            this.button2.TabIndex = 9;
-            this.button2.Text = "Xóa";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnXoa.Location = new System.Drawing.Point(654, 716);
+            this.btnXoa.Name = "btnXoa";
+            this.btnXoa.Size = new System.Drawing.Size(116, 43);
+            this.btnXoa.TabIndex = 9;
+            this.btnXoa.Text = "Xóa";
+            this.btnXoa.UseVisualStyleBackColor = true;
+            this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
             // 
-            // button3
+            // btnSua
             // 
-            this.button3.Location = new System.Drawing.Point(776, 716);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(123, 43);
-            this.button3.TabIndex = 10;
-            this.button3.Text = "Sửa";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnSua.Location = new System.Drawing.Point(776, 716);
+            this.btnSua.Name = "btnSua";
+            this.btnSua.Size = new System.Drawing.Size(123, 43);
+            this.btnSua.TabIndex = 10;
+            this.btnSua.Text = "Sửa";
+            this.btnSua.UseVisualStyleBackColor = true;
+            this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
             // 
             // button4
             // 
@@ -192,14 +196,15 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.SandyBrown;
             this.ClientSize = new System.Drawing.Size(1126, 853);
             this.Controls.Add(this.txtDonGiaNhap);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtTongChiPhi);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnSua);
+            this.Controls.Add(this.btnXoa);
             this.Controls.Add(this.btnThem);
             this.Controls.Add(this.dtpNgayNhap);
             this.Controls.Add(this.label3);
@@ -230,8 +235,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DateTimePicker dtpNgayNhap;
         private System.Windows.Forms.Button btnThem;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnXoa;
+        private System.Windows.Forms.Button btnSua;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtTongChiPhi;

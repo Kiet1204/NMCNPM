@@ -13,6 +13,19 @@
           <Property Name="SucChua" Type="int" />
           <Property Name="TrangThai" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="ChamCong">
+          <Key>
+            <PropertyRef Name="MaCC" />
+          </Key>
+          <Property Name="MaCC" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaNV" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="NgayLam" Type="date" Nullable="false" />
+          <Property Name="GioVao" Type="time" Precision="7" />
+          <Property Name="GioRa" Type="time" Precision="7" />
+          <Property Name="SoGioLam" Type="numeric" Precision="17" Scale="6" StoreGeneratedPattern="Computed" />
+          <Property Name="TrangThai" Type="nvarchar" MaxLength="50" />
+          <Property Name="GhiChu" Type="nvarchar" MaxLength="255" />
+        </EntityType>
         <EntityType Name="ChiTietHoaDon">
           <Key>
             <PropertyRef Name="MaHD" />
@@ -100,8 +113,9 @@
           <Property Name="GioiTinh" Type="nvarchar" MaxLength="10" />
           <Property Name="SDT" Type="nvarchar" MaxLength="15" />
           <Property Name="NgayVaoLam" Type="date" />
-          <Property Name="MatKhau" Type="nvarchar" MaxLength="100" />
+          <Property Name="MatKhau" Type="nvarchar" MaxLength="64" />
           <Property Name="Quyen" Type="nvarchar" MaxLength="50" />
+          <Property Name="LuongCoBanTheoGio" Type="decimal" Precision="10" Scale="2" />
         </EntityType>
         <EntityType Name="PhieuNhapKho">
           <Key>
@@ -122,6 +136,18 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <Association Name="FK__ChamCong__MaNV__7C4F7684">
+          <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="1" />
+          <End Role="ChamCong" Type="Self.ChamCong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NhanVien">
+              <PropertyRef Name="MaNV" />
+            </Principal>
+            <Dependent Role="ChamCong">
+              <PropertyRef Name="MaNV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__ChiTietHoa__MaDU__47DBAE45">
           <End Role="DoUong" Type="Self.DoUong" Multiplicity="1" />
           <End Role="ChiTietHoaDon" Type="Self.ChiTietHoaDon" Multiplicity="*" />
@@ -275,6 +301,7 @@
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="QuanLyCafeModelStoreContainer">
           <EntitySet Name="Ban" EntityType="Self.Ban" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChamCong" EntityType="Self.ChamCong" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChiTietHoaDon" EntityType="Self.ChiTietHoaDon" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChiTietPhieuNhap" EntityType="Self.ChiTietPhieuNhap" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CongThucDoUong" EntityType="Self.CongThucDoUong" Schema="dbo" store:Type="Tables" />
@@ -286,6 +313,10 @@
           <EntitySet Name="NhanVien" EntityType="Self.NhanVien" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhieuNhapKho" EntityType="Self.PhieuNhapKho" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__ChamCong__MaNV__7C4F7684" Association="Self.FK__ChamCong__MaNV__7C4F7684">
+            <End Role="NhanVien" EntitySet="NhanVien" />
+            <End Role="ChamCong" EntitySet="ChamCong" />
+          </AssociationSet>
           <AssociationSet Name="FK__ChiTietHoa__MaDU__47DBAE45" Association="Self.FK__ChiTietHoa__MaDU__47DBAE45">
             <End Role="DoUong" EntitySet="DoUong" />
             <End Role="ChiTietHoaDon" EntitySet="ChiTietHoaDon" />
@@ -406,10 +437,12 @@
           <Property Name="GioiTinh" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="SDT" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="NgayVaoLam" Type="DateTime" Precision="0" />
-          <Property Name="MatKhau" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MatKhau" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="Quyen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="HoaDons" Relationship="Self.FK__HoaDon__MaNV__4222D4EF" FromRole="NhanVien" ToRole="HoaDon" />
           <NavigationProperty Name="PhieuNhapKhoes" Relationship="QuanLyCafeModel.FK__PhieuNhapK__MaNV__71D1E811" FromRole="NhanVien" ToRole="PhieuNhapKho" />
+          <Property Name="LuongCoBanTheoGio" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="ChamCongs" Relationship="QuanLyCafeModel.FK__ChamCong__MaNV__7C4F7684" FromRole="NhanVien" ToRole="ChamCong" />
         </EntityType>
         <Association Name="FK__ChiTietHoa__MaDU__47DBAE45">
           <End Role="DoUong" Type="Self.DoUong" Multiplicity="1" />
@@ -554,6 +587,11 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="ChamCongs" EntityType="QuanLyCafeModel.ChamCong" />
+          <AssociationSet Name="FK__ChamCong__MaNV__7C4F7684" Association="QuanLyCafeModel.FK__ChamCong__MaNV__7C4F7684">
+            <End Role="NhanVien" EntitySet="NhanViens" />
+            <End Role="ChamCong" EntitySet="ChamCongs" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="NguyenLieu">
           <Key>
@@ -683,6 +721,32 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="ChamCong">
+          <Key>
+            <PropertyRef Name="MaCC" />
+          </Key>
+          <Property Name="MaCC" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaNV" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NgayLam" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="GioVao" Type="Time" Precision="7" />
+          <Property Name="GioRa" Type="Time" Precision="7" />
+          <Property Name="SoGioLam" Type="Decimal" Precision="17" Scale="6" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="TrangThai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GhiChu" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NhanVien" Relationship="QuanLyCafeModel.FK__ChamCong__MaNV__7C4F7684" FromRole="ChamCong" ToRole="NhanVien" />
+        </EntityType>
+        <Association Name="FK__ChamCong__MaNV__7C4F7684">
+          <End Type="QuanLyCafeModel.NhanVien" Role="NhanVien" Multiplicity="1" />
+          <End Type="QuanLyCafeModel.ChamCong" Role="ChamCong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NhanVien">
+              <PropertyRef Name="MaNV" />
+            </Principal>
+            <Dependent Role="ChamCong">
+              <PropertyRef Name="MaNV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -753,6 +817,7 @@
           <EntitySetMapping Name="NhanViens">
             <EntityTypeMapping TypeName="QuanLyCafeModel.NhanVien">
               <MappingFragment StoreEntitySet="NhanVien">
+                <ScalarProperty Name="LuongCoBanTheoGio" ColumnName="LuongCoBanTheoGio" />
                 <ScalarProperty Name="MaNV" ColumnName="MaNV" />
                 <ScalarProperty Name="TenNV" ColumnName="TenNV" />
                 <ScalarProperty Name="GioiTinh" ColumnName="GioiTinh" />
@@ -839,6 +904,20 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="QuanLyCafeModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="QuanLyCafeModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="ChamCongs">
+            <EntityTypeMapping TypeName="QuanLyCafeModel.ChamCong">
+              <MappingFragment StoreEntitySet="ChamCong">
+                <ScalarProperty Name="GhiChu" ColumnName="GhiChu" />
+                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+                <ScalarProperty Name="SoGioLam" ColumnName="SoGioLam" />
+                <ScalarProperty Name="GioRa" ColumnName="GioRa" />
+                <ScalarProperty Name="GioVao" ColumnName="GioVao" />
+                <ScalarProperty Name="NgayLam" ColumnName="NgayLam" />
+                <ScalarProperty Name="MaNV" ColumnName="MaNV" />
+                <ScalarProperty Name="MaCC" ColumnName="MaCC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

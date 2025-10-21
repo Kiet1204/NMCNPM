@@ -38,6 +38,7 @@ namespace JazzCoffe
                 .ToList();
             dtgvNguyenLieu.ReadOnly = true;
             dtgvNguyenLieu.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dtgvNguyenLieu.Columns["SoLuongTon"].DefaultCellStyle.Format = "N4";
         }
 
         private void LamMoi()

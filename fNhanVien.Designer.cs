@@ -45,6 +45,10 @@
             this.btSearchNameNV = new System.Windows.Forms.Button();
             this.txtSearchNameNV = new System.Windows.Forms.TextBox();
             this.lbSearchName = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtLuongCoBan = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cbChucVu = new System.Windows.Forms.ComboBox();
             this.mnfNhanVien.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgvNhanVien)).BeginInit();
             this.SuspendLayout();
@@ -60,7 +64,7 @@
             this.RefreshToolStripMenuItem});
             this.mnfNhanVien.Location = new System.Drawing.Point(0, 0);
             this.mnfNhanVien.Name = "mnfNhanVien";
-            this.mnfNhanVien.Size = new System.Drawing.Size(700, 33);
+            this.mnfNhanVien.Size = new System.Drawing.Size(845, 33);
             this.mnfNhanVien.TabIndex = 0;
             this.mnfNhanVien.Text = "menuStrip1";
             // 
@@ -127,7 +131,7 @@
             // lbNVPassword
             // 
             this.lbNVPassword.AutoSize = true;
-            this.lbNVPassword.Location = new System.Drawing.Point(374, 46);
+            this.lbNVPassword.Location = new System.Drawing.Point(506, 46);
             this.lbNVPassword.Name = "lbNVPassword";
             this.lbNVPassword.Size = new System.Drawing.Size(79, 20);
             this.lbNVPassword.TabIndex = 19;
@@ -136,15 +140,15 @@
             // 
             // txtNVPassword
             // 
-            this.txtNVPassword.Location = new System.Drawing.Point(459, 46);
+            this.txtNVPassword.Location = new System.Drawing.Point(591, 43);
             this.txtNVPassword.Name = "txtNVPassword";
-            this.txtNVPassword.Size = new System.Drawing.Size(186, 26);
+            this.txtNVPassword.Size = new System.Drawing.Size(200, 26);
             this.txtNVPassword.TabIndex = 20;
             // 
             // lbNumberPhone
             // 
             this.lbNumberPhone.AutoSize = true;
-            this.lbNumberPhone.Location = new System.Drawing.Point(347, 92);
+            this.lbNumberPhone.Location = new System.Drawing.Point(479, 92);
             this.lbNumberPhone.Name = "lbNumberPhone";
             this.lbNumberPhone.Size = new System.Drawing.Size(106, 20);
             this.lbNumberPhone.TabIndex = 21;
@@ -152,26 +156,26 @@
             // 
             // txtSDT
             // 
-            this.txtSDT.Location = new System.Drawing.Point(459, 92);
+            this.txtSDT.Location = new System.Drawing.Point(591, 92);
             this.txtSDT.Name = "txtSDT";
-            this.txtSDT.Size = new System.Drawing.Size(186, 26);
+            this.txtSDT.Size = new System.Drawing.Size(200, 26);
             this.txtSDT.TabIndex = 22;
             // 
             // dtgvNhanVien
             // 
             this.dtgvNhanVien.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtgvNhanVien.Location = new System.Drawing.Point(0, 136);
+            this.dtgvNhanVien.Location = new System.Drawing.Point(0, 184);
             this.dtgvNhanVien.Name = "dtgvNhanVien";
             this.dtgvNhanVien.RowHeadersWidth = 62;
             this.dtgvNhanVien.RowTemplate.Height = 28;
-            this.dtgvNhanVien.Size = new System.Drawing.Size(699, 474);
+            this.dtgvNhanVien.Size = new System.Drawing.Size(845, 474);
             this.dtgvNhanVien.TabIndex = 23;
             this.dtgvNhanVien.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgvNhanVien_CellClick);
             this.dtgvNhanVien.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgvNhanVien_CellContentClick);
             // 
             // btSearchNameNV
             // 
-            this.btSearchNameNV.Location = new System.Drawing.Point(514, 627);
+            this.btSearchNameNV.Location = new System.Drawing.Point(659, 679);
             this.btSearchNameNV.Name = "btSearchNameNV";
             this.btSearchNameNV.Size = new System.Drawing.Size(174, 41);
             this.btSearchNameNV.TabIndex = 26;
@@ -181,7 +185,7 @@
             // 
             // txtSearchNameNV
             // 
-            this.txtSearchNameNV.Location = new System.Drawing.Point(260, 634);
+            this.txtSearchNameNV.Location = new System.Drawing.Point(405, 686);
             this.txtSearchNameNV.Name = "txtSearchNameNV";
             this.txtSearchNameNV.Size = new System.Drawing.Size(248, 26);
             this.txtSearchNameNV.TabIndex = 25;
@@ -189,19 +193,56 @@
             // lbSearchName
             // 
             this.lbSearchName.AutoSize = true;
-            this.lbSearchName.Location = new System.Drawing.Point(116, 637);
+            this.lbSearchName.Location = new System.Drawing.Point(261, 692);
             this.lbSearchName.Name = "lbSearchName";
             this.lbSearchName.Size = new System.Drawing.Size(138, 20);
             this.lbSearchName.TabIndex = 24;
             this.lbSearchName.Text = "Tìm kiếm theo tên:";
             this.lbSearchName.Click += new System.EventHandler(this.lbSearchName_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(414, 141);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(171, 20);
+            this.label1.TabIndex = 27;
+            this.label1.Text = "Lương cơ bản theo giờ:";
+            // 
+            // txtLuongCoBan
+            // 
+            this.txtLuongCoBan.Location = new System.Drawing.Point(591, 135);
+            this.txtLuongCoBan.Name = "txtLuongCoBan";
+            this.txtLuongCoBan.Size = new System.Drawing.Size(200, 26);
+            this.txtLuongCoBan.TabIndex = 28;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(49, 135);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(70, 20);
+            this.label2.TabIndex = 29;
+            this.label2.Text = "Chức vụ:";
+            // 
+            // cbChucVu
+            // 
+            this.cbChucVu.FormattingEnabled = true;
+            this.cbChucVu.Location = new System.Drawing.Point(125, 130);
+            this.cbChucVu.Name = "cbChucVu";
+            this.cbChucVu.Size = new System.Drawing.Size(200, 28);
+            this.cbChucVu.TabIndex = 30;
+            // 
             // fNhanVien
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SandyBrown;
-            this.ClientSize = new System.Drawing.Size(700, 703);
+            this.ClientSize = new System.Drawing.Size(845, 764);
+            this.Controls.Add(this.cbChucVu);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.txtLuongCoBan);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btSearchNameNV);
             this.Controls.Add(this.txtSearchNameNV);
             this.Controls.Add(this.lbSearchName);
@@ -247,5 +288,9 @@
         private System.Windows.Forms.Button btSearchNameNV;
         private System.Windows.Forms.TextBox txtSearchNameNV;
         private System.Windows.Forms.Label lbSearchName;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtLuongCoBan;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox cbChucVu;
     }
 }

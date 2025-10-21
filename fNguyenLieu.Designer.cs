@@ -93,11 +93,11 @@
             // dtgvNguyenLieu
             // 
             this.dtgvNguyenLieu.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtgvNguyenLieu.Location = new System.Drawing.Point(5, 299);
+            this.dtgvNguyenLieu.Location = new System.Drawing.Point(0, 299);
             this.dtgvNguyenLieu.Name = "dtgvNguyenLieu";
             this.dtgvNguyenLieu.RowHeadersWidth = 62;
             this.dtgvNguyenLieu.RowTemplate.Height = 28;
-            this.dtgvNguyenLieu.Size = new System.Drawing.Size(980, 406);
+            this.dtgvNguyenLieu.Size = new System.Drawing.Size(985, 406);
             this.dtgvNguyenLieu.TabIndex = 2;
             this.dtgvNguyenLieu.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgvNguyenLieu_CellContentClick_1);
             // 
@@ -170,6 +170,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.SandyBrown;
             this.ClientSize = new System.Drawing.Size(985, 705);
             this.Controls.Add(this.txtGhiChu);
             this.Controls.Add(this.txtSLToiThieu);

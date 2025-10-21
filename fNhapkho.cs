@@ -14,9 +14,9 @@ namespace JazzCoffe
     {
         QuanLyCafeEntities2 db = new QuanLyCafeEntities2();
 
-        List<dynamic> phieuNhapTam = new List<dynamic>();
+        List<PhieuNhapTam> phieuNhapTam = new List<PhieuNhapTam>();
         int maPhieuNhapHienTai = 1;  // Mã phiếu nhập cho lượt hiện tại
-        bool daNhapThanhCong = false; // Kiểm tra xem đã hoàn tất lượt nhập chưa
+        //bool daNhapThanhCong = false; // Kiểm tra xem đã hoàn tất lượt nhập chưa
         public fNhapkho()
         {
             InitializeComponent();
@@ -25,6 +25,7 @@ namespace JazzCoffe
         private void fNhapkho_Load(object sender, EventArgs e)
         {
             LoadNguyenLieu();
+            //LoadPhieuNhapKho();
             var lastPN = db.PhieuNhapKhoes.OrderByDescending(p => p.MaPN).FirstOrDefault();
             maPhieuNhapHienTai = (lastPN != null) ? lastPN.MaPN + 1 : 1;
 
@@ -43,7 +44,6 @@ namespace JazzCoffe
                 .ToList();
 
         }
-
         private void label1_Click(object sender, EventArgs e)
         {
 
@@ -59,32 +59,34 @@ namespace JazzCoffe
             }
         }
 
+
+
         private void btnThem_Click(object sender, EventArgs e)
         {
             if (dtgvNguyenLieu.CurrentRow == null)
             {
-                MessageBox.Show("Vui lòng chọn nguyên liệu trước!");
+                MessageBox.Show("Vui lòng chọn nguyên liệu!");
                 return;
             }
 
-            // Lấy thông tin nguyên liệu đang chọn
             int maNL = Convert.ToInt32(dtgvNguyenLieu.CurrentRow.Cells["MaNL"].Value);
             string tenNL = dtgvNguyenLieu.CurrentRow.Cells["TenNL"].Value.ToString();
 
-            // Lấy thông tin từ textbox
-            string maNV = txtMaNV.Text.Trim();
-            double soLuong = 0, donGia = 0;
-            if (!double.TryParse(txtSoLuongNhap.Text, out soLuong) || !double.TryParse(txtDonGiaNhap.Text, out donGia))
+            if (!double.TryParse(txtSoLuongNhap.Text, out double soLuong) || soLuong <= 0)
             {
-                MessageBox.Show("Số lượng và đơn giá phải là số hợp lệ!");
+                MessageBox.Show("Số lượng phải là số hợp lệ!");
+                return;
+            }
+            if (!decimal.TryParse(txtDonGiaNhap.Text, out decimal donGia) || donGia <= 0)
+            {
+                MessageBox.Show("Đơn giá phải là số hợp lệ!");
                 return;
             }
 
-            // Tạo mã phiếu nhập tạm (ví dụ tăng tự động)
+            string maNV = txtMaNV.Text.Trim();
             int maPN = maPhieuNhapHienTai;
 
-            // Thêm vào danh sách tạm
-            phieuNhapTam.Add(new
+            var item = new PhieuNhapTam
             {
                 MaPN = maPN,
                 MaNV = maNV,
@@ -93,118 +95,164 @@ namespace JazzCoffe
                 SoLuongNhap = soLuong,
                 DonGiaNhap = donGia,
                 NgayNhap = dtpNgayNhap.Value
-            });
+            };
 
-            // Cập nhật hiển thị
-            dtgvPhieuNhapKhoTam.DataSource = null;
-            dtgvPhieuNhapKhoTam.DataSource = phieuNhapTam;
-            dtgvPhieuNhapKhoTam.Columns["DonGiaNhap"].DefaultCellStyle.Format = "#,##0 VNĐ";
-            dtgvPhieuNhapKhoTam.Columns["NgayNhap"].DefaultCellStyle.Format = "dd/MM/yyyy";
+            phieuNhapTam.Add(item);
 
-            dtgvPhieuNhapKhoTam.Columns[0].HeaderText = "Mã phiếu nhập";
-            dtgvPhieuNhapKhoTam.Columns[1].HeaderText = "Mã nhân viên";
-            dtgvPhieuNhapKhoTam.Columns[2].HeaderText = "Mã nguyên liệu";
-            dtgvPhieuNhapKhoTam.Columns[3].HeaderText = "Tên nguyên liệu";
-            dtgvPhieuNhapKhoTam.Columns[4].HeaderText = "Số lượng nhập";
-            dtgvPhieuNhapKhoTam.Columns[5].HeaderText = "Đơn giá nhập";
-            dtgvPhieuNhapKhoTam.Columns[6].HeaderText = "Ngày nhập";
-
-            double tong = 0;
-            foreach (DataGridViewRow row in dtgvPhieuNhapKhoTam.Rows)
-            {
-                if (row.Cells["DonGiaNhap"].Value != null)
-                {
-                    double gia;
-                    if (double.TryParse(row.Cells["DonGiaNhap"].Value.ToString(), out gia))
-                        tong += gia;
-                }
-            }
-
-            txtTongChiPhi.Text = tong.ToString("N0") + " VNĐ";
-
+            CapNhatBangTam();
         }
 
+        private void CapNhatBangTam()
+        {
+            dtgvPhieuNhapKhoTam.DataSource = null;
+            dtgvPhieuNhapKhoTam.DataSource = phieuNhapTam;
+
+            dtgvPhieuNhapKhoTam.Columns["MaPN"].HeaderText = "Mã phiếu nhập";
+            dtgvPhieuNhapKhoTam.Columns["MaNV"].HeaderText = "Mã nhân viên";
+            dtgvPhieuNhapKhoTam.Columns["MaNL"].HeaderText = "Mã nguyên liệu";
+            dtgvPhieuNhapKhoTam.Columns["TenNL"].HeaderText = "Tên nguyên liệu";
+            dtgvPhieuNhapKhoTam.Columns["SoLuongNhap"].HeaderText = "Số lượng";
+            dtgvPhieuNhapKhoTam.Columns["DonGiaNhap"].HeaderText = "Đơn giá";
+            dtgvPhieuNhapKhoTam.Columns["NgayNhap"].HeaderText = "Ngày nhập";
+
+            dtgvPhieuNhapKhoTam.Columns["DonGiaNhap"].DefaultCellStyle.Format = "N0"; // Có dấu phân cách hàng nghìn
+            dtgvPhieuNhapKhoTam.Columns["DonGiaNhap"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dtgvPhieuNhapKhoTam.Columns["DonGiaNhap"].HeaderText = "Đơn giá nhập (VNĐ)";
+
+            // 🔹 Định dạng cột Ngày nhập (hiển thị dd/MM/yyyy)
+            dtgvPhieuNhapKhoTam.Columns["NgayNhap"].DefaultCellStyle.Format = "dd/MM/yyyy";
+            dtgvPhieuNhapKhoTam.Columns["NgayNhap"].HeaderText = "Ngày nhập";
+            decimal tong = phieuNhapTam.Sum(x => (decimal)x.DonGiaNhap);
+            txtTongChiPhi.Text = tong.ToString("N0") + " VNĐ";
+        }
         private void btnNhap_Click(object sender, EventArgs e)
         {
             try
             {
                 if (phieuNhapTam.Count == 0)
                 {
-                    MessageBox.Show("Chưa có nguyên liệu nào được thêm!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Chưa có nguyên liệu nào để nhập!");
                     return;
                 }
 
                 if (string.IsNullOrWhiteSpace(txtMaNV.Text))
                 {
-                    MessageBox.Show("Vui lòng nhập mã nhân viên!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Vui lòng nhập mã nhân viên!");
                     return;
                 }
 
-                // ✅ Tính tổng chi phí (decimal)
-                decimal tongChiPhi = phieuNhapTam.Sum(item => (decimal)item.DonGiaNhap);
+                decimal tongTien = phieuNhapTam.Sum(x => (decimal)x.DonGiaNhap);
 
-                // ✅ Tạo đối tượng phiếu nhập kho mới
-                PhieuNhapKho pn = new PhieuNhapKho()
+                PhieuNhapKho pn = new PhieuNhapKho
                 {
                     MaNV = txtMaNV.Text.Trim(),
                     NgayNhap = dtpNgayNhap.Value,
-                    TongTien = tongChiPhi
+                    TongTien = tongTien
                 };
 
                 db.PhieuNhapKhoes.Add(pn);
-                db.SaveChanges(); // Lưu để có MaPN tự tăng
+                db.SaveChanges();
 
-                // ✅ Lưu chi tiết phiếu nhập
                 foreach (var item in phieuNhapTam)
                 {
-                    ChiTietPhieuNhap ct = new ChiTietPhieuNhap()
+                    ChiTietPhieuNhap ct = new ChiTietPhieuNhap
                     {
                         MaPN = pn.MaPN,
                         MaNL = item.MaNL,
                         SoLuongNhap = item.SoLuongNhap,
-                        DonGiaNhap = (decimal)item.DonGiaNhap
+                        DonGiaNhap = item.DonGiaNhap
                     };
 
                     db.ChiTietPhieuNhaps.Add(ct);
 
-                    // Cập nhật số lượng tồn kho cho nguyên liệu
-                    int maNL = (int)item.MaNL;
-                    var nl = db.NguyenLieux.FirstOrDefault(n => n.MaNL == maNL);
-
+                    var nl = db.NguyenLieux.FirstOrDefault(n => n.MaNL == item.MaNL);
                     if (nl != null)
-                    {
-                        nl.SoLuongTon = (float)((double)nl.SoLuongTon + (double)item.SoLuongNhap);
-                    }
+                        nl.SoLuongTon += (float)item.SoLuongNhap;
                 }
 
                 db.SaveChanges();
+                MessageBox.Show("Nhập kho thành công!");
 
-                MessageBox.Show("Nhập kho thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // ✅ Mở form chi tiết phiếu nhập
-                fChiTietNhapKho f = new fChiTietNhapKho(pn.MaPN);
-                f.ShowDialog();
-
-
-                // Xóa dữ liệu tạm và cập nhật giao diện
                 phieuNhapTam.Clear();
-                dtgvPhieuNhapKhoTam.DataSource = null;
-                txtTongChiPhi.Clear();
-
-                // Cập nhật lại danh sách nguyên liệu sau khi nhập
+                CapNhatBangTam();
                 LoadNguyenLieu();
 
-                // Tạo mã phiếu nhập mới cho lượt tiếp theo
                 var lastPN = db.PhieuNhapKhoes.OrderByDescending(p => p.MaPN).FirstOrDefault();
                 maPhieuNhapHienTai = (lastPN != null) ? lastPN.MaPN + 1 : 1;
-
-                daNhapThanhCong = true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi nhập kho: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi khi nhập kho: " + ex.Message);
+            }
+        }
+        private void dtgvPhieuNhapKhoTam_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void btnXoa_Click(object sender, EventArgs e)
+        {
+            if (dtgvPhieuNhapKhoTam.CurrentRow == null)
+            {
+                MessageBox.Show("Vui lòng chọn dòng cần xóa!");
+                return;
+            }
+
+            int maNL = Convert.ToInt32(dtgvPhieuNhapKhoTam.CurrentRow.Cells["MaNL"].Value);
+
+            phieuNhapTam.RemoveAll(x => x.MaNL == maNL);
+            CapNhatBangTam();
+        }
+
+        private void btnSua_Click(object sender, EventArgs e)
+        {
+            if (dtgvPhieuNhapKhoTam.CurrentRow == null)
+            {
+                MessageBox.Show("Vui lòng chọn dòng cần sửa!");
+                return;
+            }
+
+            int maNL = Convert.ToInt32(dtgvPhieuNhapKhoTam.CurrentRow.Cells["MaNL"].Value);
+            var item = phieuNhapTam.FirstOrDefault(x => x.MaNL == maNL);
+
+            if (item == null) return;
+
+            if (double.TryParse(txtSoLuongNhap.Text, out double sl))
+                item.SoLuongNhap = sl;
+            if (decimal.TryParse(txtDonGiaNhap.Text, out decimal dg))
+                item.DonGiaNhap = dg;
+
+            item.NgayNhap = dtpNgayNhap.Value;
+            CapNhatBangTam();
+        }
+
+
+
+
+
+        private void dtgvPhieuNhapKhoTam_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                var row = dtgvPhieuNhapKhoTam.Rows[e.RowIndex];
+                txtMaNV.Text = row.Cells["MaNV"].Value?.ToString();
+                txtSoLuongNhap.Text = row.Cells["SoLuongNhap"].Value?.ToString();
+                txtDonGiaNhap.Text = row.Cells["DonGiaNhap"].Value?.ToString();
+                if (DateTime.TryParse(row.Cells["NgayNhap"].Value?.ToString(), out DateTime ngay))
+                    dtpNgayNhap.Value = ngay;
             }
         }
 
+       
+    }
+    public class PhieuNhapTam
+    {
+        public int MaPN { get; set; }
+        public string MaNV { get; set; }
+        public int MaNL { get; set; }
+        public string TenNL { get; set; }
+        public double SoLuongNhap { get; set; }
+        public decimal DonGiaNhap { get; set; }
+        public DateTime NgayNhap { get; set; }
     }
 }

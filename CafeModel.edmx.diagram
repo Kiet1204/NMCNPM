@@ -27,6 +27,8 @@
         <AssociationConnector Association="QuanLyCafeModel.FK__CongThucDo__MaDU__787EE5A0" />
         <AssociationConnector Association="QuanLyCafeModel.FK__CongThucDo__MaNL__797309D9" />
         <AssociationConnector Association="QuanLyCafeModel.FK__PhieuNhapK__MaNV__71D1E811" />
+        <EntityTypeShape EntityType="QuanLyCafeModel.ChamCong" Width="1.5" PointX="3" PointY="16.375" />
+        <AssociationConnector Association="QuanLyCafeModel.FK__ChamCong__MaNV__7C4F7684" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

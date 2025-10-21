@@ -93,6 +93,7 @@
             this.cboChucVu.Name = "cboChucVu";
             this.cboChucVu.Size = new System.Drawing.Size(337, 28);
             this.cboChucVu.TabIndex = 7;
+            this.cboChucVu.SelectedIndexChanged += new System.EventHandler(this.cboChucVu_SelectedIndexChanged);
             // 
             // btDangNhap
             // 

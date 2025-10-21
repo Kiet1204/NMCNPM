@@ -17,9 +17,9 @@
 
         private void InitializeComponent()
         {
-            this.txtOldPassword = new System.Windows.Forms.TextBox();
-            this.txtNewPassword = new System.Windows.Forms.TextBox();
-            this.txtConfirmPassword = new System.Windows.Forms.TextBox();
+            this.txtMatKhauCu = new System.Windows.Forms.TextBox();
+            this.txtMatKhauMoi = new System.Windows.Forms.TextBox();
+            this.txtXacNhanMK = new System.Windows.Forms.TextBox();
             this.lbOldPassword = new System.Windows.Forms.Label();
             this.lbNewPassword = new System.Windows.Forms.Label();
             this.lbConfirmPassword = new System.Windows.Forms.Label();
@@ -29,29 +29,29 @@
             this.txtMaNV = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // txtOldPassword
+            // txtMatKhauCu
             // 
-            this.txtOldPassword.Location = new System.Drawing.Point(188, 67);
-            this.txtOldPassword.Name = "txtOldPassword";
-            this.txtOldPassword.Size = new System.Drawing.Size(248, 26);
-            this.txtOldPassword.TabIndex = 0;
-            this.txtOldPassword.UseSystemPasswordChar = true;
+            this.txtMatKhauCu.Location = new System.Drawing.Point(188, 67);
+            this.txtMatKhauCu.Name = "txtMatKhauCu";
+            this.txtMatKhauCu.Size = new System.Drawing.Size(248, 26);
+            this.txtMatKhauCu.TabIndex = 0;
+            this.txtMatKhauCu.UseSystemPasswordChar = true;
             // 
-            // txtNewPassword
+            // txtMatKhauMoi
             // 
-            this.txtNewPassword.Location = new System.Drawing.Point(188, 114);
-            this.txtNewPassword.Name = "txtNewPassword";
-            this.txtNewPassword.Size = new System.Drawing.Size(248, 26);
-            this.txtNewPassword.TabIndex = 1;
-            this.txtNewPassword.UseSystemPasswordChar = true;
+            this.txtMatKhauMoi.Location = new System.Drawing.Point(188, 114);
+            this.txtMatKhauMoi.Name = "txtMatKhauMoi";
+            this.txtMatKhauMoi.Size = new System.Drawing.Size(248, 26);
+            this.txtMatKhauMoi.TabIndex = 1;
+            this.txtMatKhauMoi.UseSystemPasswordChar = true;
             // 
-            // txtConfirmPassword
+            // txtXacNhanMK
             // 
-            this.txtConfirmPassword.Location = new System.Drawing.Point(188, 156);
-            this.txtConfirmPassword.Name = "txtConfirmPassword";
-            this.txtConfirmPassword.Size = new System.Drawing.Size(248, 26);
-            this.txtConfirmPassword.TabIndex = 2;
-            this.txtConfirmPassword.UseSystemPasswordChar = true;
+            this.txtXacNhanMK.Location = new System.Drawing.Point(188, 156);
+            this.txtXacNhanMK.Name = "txtXacNhanMK";
+            this.txtXacNhanMK.Size = new System.Drawing.Size(248, 26);
+            this.txtXacNhanMK.TabIndex = 2;
+            this.txtXacNhanMK.UseSystemPasswordChar = true;
             // 
             // lbOldPassword
             // 
@@ -115,7 +115,6 @@
             this.txtMaNV.Name = "txtMaNV";
             this.txtMaNV.Size = new System.Drawing.Size(248, 26);
             this.txtMaNV.TabIndex = 9;
-            this.txtMaNV.UseSystemPasswordChar = true;
             // 
             // fDoiMatKhau
             // 
@@ -130,9 +129,9 @@
             this.Controls.Add(this.lbConfirmPassword);
             this.Controls.Add(this.lbNewPassword);
             this.Controls.Add(this.lbOldPassword);
-            this.Controls.Add(this.txtConfirmPassword);
-            this.Controls.Add(this.txtNewPassword);
-            this.Controls.Add(this.txtOldPassword);
+            this.Controls.Add(this.txtXacNhanMK);
+            this.Controls.Add(this.txtMatKhauMoi);
+            this.Controls.Add(this.txtMatKhauCu);
             this.Name = "fDoiMatKhau";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Đổi mật khẩu";
@@ -144,9 +143,9 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox txtOldPassword;
-        private System.Windows.Forms.TextBox txtNewPassword;
-        private System.Windows.Forms.TextBox txtConfirmPassword;
+        private System.Windows.Forms.TextBox txtMatKhauCu;
+        private System.Windows.Forms.TextBox txtMatKhauMoi;
+        private System.Windows.Forms.TextBox txtXacNhanMK;
         private System.Windows.Forms.Label lbOldPassword;
         private System.Windows.Forms.Label lbNewPassword;
         private System.Windows.Forms.Label lbConfirmPassword;

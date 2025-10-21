@@ -25,41 +25,34 @@ namespace JazzCoffe
 
         private void LoadData()
         {
-            using (var context = new QuanLyCafeEntities2())
+            var dsDoUong = (from du in db.DoUongs
+                            join loai in db.LoaiDoUongs
+                            on du.MaLoai equals loai.MaLoai
+                            select new
+                            {
+                                du.MaDU,
+                                du.TenDU,
+                                TenLoai = loai.TenLoai,
+                                du.DonGia
+                            }).ToList();
+
+            dtgvDoUong.DataSource = dsDoUong;
+
+            // 🔹 Format VNĐ
+            if (dtgvDoUong.Columns["DonGia"] != null)
             {
-                var dsDoUong = (from du in context.DoUongs
-                                join loai in context.LoaiDoUongs
-                                on du.MaLoai equals loai.MaLoai
-                                select new
-                                {
-                                    du.MaDU,
-                                    du.TenDU,
-                                    TenLoai = loai.TenLoai,  // 🟢 Thay vì MaLoai
-                                    du.DonGia
-                                }).ToList();
-
-                dtgvDoUong.DataSource = dsDoUong;
-
-                //  Format cột DonGia (đảm bảo cột tồn tại mới format)
-                if (dtgvDoUong.Columns["DonGia"] != null)
-                {
-                    //dtgvMenuQuanLyCaPhe.Columns["DonGia"].DefaultCellStyle.Format = "N0"; // số nguyên có dấu phẩy
-                    dtgvDoUong.Columns["DonGia"].DefaultCellStyle.Format = "#,##0 'VNĐ'";                                                                     // hoặc nếu muốn có đơn vị:
-                    // dtgvMenuQuanLyCaPhe.Columns["DonGia"].DefaultCellStyle.Format = "#,##0 'VNĐ'";
-                }
+                dtgvDoUong.Columns["DonGia"].DefaultCellStyle.Format = "#,##0 'VNĐ'";
             }
         }
         private void dtgvTypeDrink_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0 && dtgvDoUong.Rows[e.RowIndex].Cells.Count > 0)
+            if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = dtgvDoUong.Rows[e.RowIndex];
-
-                txtMaDU.Text = row.Cells["MaDU"]?.Value?.ToString() ?? string.Empty;
-                txtTenDU.Text = row.Cells["TenDU"]?.Value?.ToString() ?? string.Empty;
-                txtMaLDU.Text = row.Cells["TenLoai"]?.Value?.ToString() ?? string.Empty;
-                txtDonGia.Text = row.Cells["DonGia"]?.Value?.ToString() ?? string.Empty;
-
+                txtMaDU.Text = row.Cells["MaDU"]?.Value?.ToString();
+                txtTenDU.Text = row.Cells["TenDU"]?.Value?.ToString();
+                txtMaLDU.Text = row.Cells["TenLoai"]?.Value?.ToString();
+                txtDonGia.Text = row.Cells["DonGia"]?.Value?.ToString()?.Replace("VNĐ", "").Trim();
             }
         }
 
@@ -76,31 +69,81 @@ namespace JazzCoffe
             
         }
 
+        private string GenerateNewMaDU()
+        {
+            string lastMaDU = db.DoUongs
+                .OrderByDescending(d => d.MaDU)
+                .Select(d => d.MaDU)
+                .FirstOrDefault();
+
+            if (string.IsNullOrEmpty(lastMaDU))
+                return "DU001";
+
+            int number = int.Parse(lastMaDU.Substring(2)) + 1;
+            return "DU" + number.ToString("D3");
+        }
+
         private void thêmToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtTenDU.Text) ||
-        string.IsNullOrWhiteSpace(txtMaLDU.Text) ||
-        string.IsNullOrWhiteSpace(txtDonGia.Text))
+            try
             {
-                MessageBox.Show("Vui lòng nhập đủ thông tin.");
-                return;
+                if (string.IsNullOrWhiteSpace(txtTenDU.Text) ||
+                    string.IsNullOrWhiteSpace(txtMaLDU.Text) ||
+                    string.IsNullOrWhiteSpace(txtDonGia.Text))
+                {
+                    MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // 🔹 Lấy mã loại theo tên loại
+                var maLoai = db.LoaiDoUongs
+                    .Where(l => l.TenLoai == txtMaLDU.Text.Trim())
+                    .Select(l => l.MaLoai)
+                    .FirstOrDefault();
+
+                if (maLoai == 0)
+                {
+                    MessageBox.Show("Loại đồ uống không tồn tại trong danh mục LoaiDoUong!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // 🔹 Tạo mã đồ uống mới
+                string newMaDU = GenerateNewMaDU();
+
+                // 🔹 Tạo đối tượng
+                DoUong douong = new DoUong
+                {
+                    MaDU = newMaDU,
+                    TenDU = txtTenDU.Text.Trim(),
+                    MaLoai = maLoai,
+                    DonGia = decimal.Parse(txtDonGia.Text.Trim())
+                };
+
+                db.DoUongs.Add(douong);
+                db.SaveChanges();
+
+                LoadData();
+                ClearTextBoxes();
+                MessageBox.Show("✅ Thêm đồ uống thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-
-            var douong = new DoUong
+            catch (System.Data.Entity.Validation.DbEntityValidationException ex)
             {
-                TenDU = txtTenDU.Text.Trim(),
-                MaLoai = db.LoaiDoUongs
-                          .Where(l => l.TenLoai == txtMaLDU.Text.Trim())
-                          .Select(l => l.MaLoai).FirstOrDefault(),
-                DonGia = decimal.Parse(txtDonGia.Text.Trim())
-            };
-
-            db.DoUongs.Add(douong);
-            db.SaveChanges();
-            LoadData();
-            ClearTextBoxes();
-            MessageBox.Show("Thêm thành công!");
+                // Xem chi tiết lỗi trong Output
+                foreach (var eve in ex.EntityValidationErrors)
+                {
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine($"Thuộc tính: {ve.PropertyName} - Lỗi: {ve.ErrorMessage}");
+                    }
+                }
+                MessageBox.Show("Lỗi khi thêm đồ uống. Kiểm tra Output để xem chi tiết.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi thêm đồ uống:\n" + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
 
         private void sửaToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -110,19 +153,28 @@ namespace JazzCoffe
                 return;
             }
 
-            string maDU = txtMaDU.Text;
-            var douong = db.DoUongs.FirstOrDefault(d => d.MaDU == maDU);
+            var douong = db.DoUongs.FirstOrDefault(d => d.MaDU == txtMaDU.Text.Trim());
             if (douong != null)
             {
+                var maLoai = db.LoaiDoUongs
+                    .Where(l => l.TenLoai == txtMaLDU.Text.Trim())
+                    .Select(l => l.MaLoai)
+                    .FirstOrDefault();
+
+                if (maLoai == 0)
+                {
+                    MessageBox.Show("Loại đồ uống không hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 douong.TenDU = txtTenDU.Text.Trim();
-                douong.MaLoai = db.LoaiDoUongs
-                                  .Where(l => l.TenLoai == txtMaLDU.Text.Trim())
-                                  .Select(l => l.MaLoai).FirstOrDefault();
+                douong.MaLoai = maLoai;
                 douong.DonGia = decimal.Parse(txtDonGia.Text.Trim());
 
                 db.SaveChanges();
                 LoadData();
-                MessageBox.Show("Cập nhật thành công!");
+                ClearTextBoxes();
+                MessageBox.Show("✅ Cập nhật thành công!");
             }
         }
 
@@ -134,17 +186,18 @@ namespace JazzCoffe
                 return;
             }
 
-            string maDU = txtMaDU.Text;
+            string maDU = txtMaDU.Text.Trim();
             var douong = db.DoUongs.FirstOrDefault(d => d.MaDU == maDU);
 
             if (douong != null)
             {
-                if (MessageBox.Show("Bạn có chắc muốn xóa?", "Xác nhận", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Bạn có chắc muốn xóa đồ uống này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     db.DoUongs.Remove(douong);
                     db.SaveChanges();
                     LoadData();
-                    MessageBox.Show("Đã xóa thành công.");
+                    ClearTextBoxes();
+                    MessageBox.Show("✅ Xóa thành công.");
                 }
             }
             else
@@ -153,6 +206,8 @@ namespace JazzCoffe
             }
         }
 
+       
+
         private void xóaTrắngToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ClearTextBoxes();
@@ -160,7 +215,7 @@ namespace JazzCoffe
 
         private void btSearchNameDrink_Click(object sender, EventArgs e)
         {
-            string keyword = txtTenDU.Text.Trim().ToLower();
+            string keyword = txbSearchNameDrink.Text.Trim().ToLower();
 
             if (string.IsNullOrWhiteSpace(keyword))
             {
@@ -182,7 +237,7 @@ namespace JazzCoffe
 
             if (result.Count == 0)
             {
-                MessageBox.Show("Không tìm thấy đồ uống nào.");
+                MessageBox.Show("Không tìm thấy đồ uống nào phù hợp!");
             }
 
             dtgvDoUong.DataSource = result;

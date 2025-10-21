@@ -44,10 +44,38 @@ namespace JazzCoffe
 
         private void PhanQuyenNguoiDung()
         {
-            if (chucVu != "Quản trị viên")
+            // Nếu là nhân viên bình thường
+            if (chucVu == "Nhân viên")
             {
-                quảnLýNhânViênToolStripMenuItem.Enabled = false;
+                // ✅ Hiện các mục được phép
+                đổiMậtKhẩuToolStripMenuItem.Visible = true;
+                chấmCôngToolStripMenuItem.Visible = true;
+                kháchHàngToolStripMenuItem.Visible = true;
+
+                // ❌ Ẩn các mục quản trị
                 quảnLýNhânViênToolStripMenuItem.Visible = false;
+                thốngKêToolStripMenuItem.Visible = false;
+                danhMụcToolStripMenuItem.Visible = false;
+            }
+            else if (chucVu == "Quản trị viên")
+            {
+                // ✅ Hiện toàn bộ
+                đổiMậtKhẩuToolStripMenuItem.Visible = true;
+                chấmCôngToolStripMenuItem.Visible = true;
+                kháchHàngToolStripMenuItem.Visible = true;
+                quảnLýNhânViênToolStripMenuItem.Visible = true;
+                thốngKêToolStripMenuItem.Visible = true;
+                danhMụcToolStripMenuItem.Visible = true;
+            }
+            else
+            {
+                // Trường hợp không xác định -> ẩn hết cho an toàn
+                đổiMậtKhẩuToolStripMenuItem.Visible = true;
+                chấmCôngToolStripMenuItem.Visible = false;
+                kháchHàngToolStripMenuItem.Visible = false;
+                quảnLýNhânViênToolStripMenuItem.Visible = false;
+                thốngKêToolStripMenuItem.Visible = false;
+                danhMụcToolStripMenuItem.Visible = false;
             }
         }
 
@@ -498,7 +526,47 @@ namespace JazzCoffe
                 hoaDon.MaKH = maHD;
                 db.SaveChanges();
 
-                // 3. Hiển thị form chi tiết hóa đơn
+                // 🧩 3. Cập nhật tồn kho nguyên liệu theo công thức pha chế
+                // assuming danhSachChon items expose MaDU and SoLuong (int) or SoLuong (decimal)
+                List<string> danhSachCanhBao = new List<string>();
+
+                foreach (var item in danhSachChon)
+                {
+                    string maDU = item.MaDU;
+                    // đảm bảo soLuongDoUong là giá trị đúng (int). Nếu danhSachChon lưu decimal thì chuyển tương ứng.
+                    int soLuongDoUong = Convert.ToInt32(item.SoLuong);
+
+                    var congThucList = db.CongThucDoUongs.Where(ct => ct.MaDU == maDU).ToList();
+
+                    foreach (var ct in congThucList)
+                    {
+                        // ép kiểu sang decimal để tính chính xác
+                        decimal soLuongDungTrongCT = Convert.ToDecimal(ct.SoLuongDung); // ct.SoLuongDung nên là decimal nếu có thể
+                        decimal soLuongTru = Math.Round(soLuongDoUong * soLuongDungTrongCT, 4); // làm tròn 4 chữ số
+
+                        var nguyenLieu = db.NguyenLieux.FirstOrDefault(nl => nl.MaNL == ct.MaNL);
+                        if (nguyenLieu != null)
+                        {
+                            // ép kiểu SoLuongTon về decimal trước khi trừ (nếu EF model là float, cast tạm thời)
+                            decimal tonHienTai = Convert.ToDecimal(nguyenLieu.SoLuongTon);
+                            decimal tonMoi = Math.Round(tonHienTai - soLuongTru, 4);
+
+                            // cập nhật lại (nếu SoLuongTon là float trong model, convert lại)
+                            nguyenLieu.SoLuongTon = (float)tonMoi; // tốt nhất đổi model thành decimal (xem phần dưới)
+
+                            if (tonMoi <= Convert.ToDecimal(nguyenLieu.SoLuongToiThieu))
+                            {
+                                string canhBao = $"- {nguyenLieu.TenNL}: còn {tonMoi:F4} {nguyenLieu.DonViTinh} (Tối thiểu: {nguyenLieu.SoLuongToiThieu})";
+                                danhSachCanhBao.Add(canhBao);
+                            }
+                        }
+                    }
+                }
+
+                db.SaveChanges();
+
+
+                // 🧾 4. Hiển thị form chi tiết hóa đơn
                 fChiTietHoaDon chiTiet = new fChiTietHoaDon(
                     maHD: maHD,
                     tenNhanVien: tenNhanVien,
@@ -508,15 +576,24 @@ namespace JazzCoffe
                     danhSach: danhSachChon
                 );
                 chiTiet.ShowDialog();
+
+                // ⚠️ 5. Hiển thị cảnh báo nếu có nguyên liệu sắp hết
+                if (danhSachCanhBao.Count > 0)
+                {
+                    string noiDung = "⚠️ Các nguyên liệu sau sắp hết, cần nhập thêm:\n\n" +
+                                     string.Join("\n", danhSachCanhBao);
+
+                    MessageBox.Show(noiDung, "Cảnh báo kho", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
 
-            // 4. Xóa hóa đơn tạm
+            // 6. Xóa hóa đơn tạm
             if (hoaDonTamTheoBan.ContainsKey(maBanDangChon))
             {
                 hoaDonTamTheoBan.Remove(maBanDangChon);
             }
 
-            // 5. Đổi trạng thái bàn thành "Trống"
+            // 7. Đổi trạng thái bàn thành "Trống"
             using (var context = new QuanLyCafeEntities2())
             {
                 var ban = context.Bans.FirstOrDefault(b => b.MaBan.ToString() == maBanDangChon);
@@ -527,7 +604,7 @@ namespace JazzCoffe
                 }
             }
 
-            // 6. Làm mới giao diện
+            // 8. Làm mới giao diện
             maBanDangChon = "";
             danhSachChon.Clear();
             dtgvHoaDonTam.DataSource = null;
@@ -535,8 +612,9 @@ namespace JazzCoffe
             lblTongTien.Text = "0 VND";
             LoadDanhSachBan();
 
-            MessageBox.Show("Thanh toán thành công!");
+            MessageBox.Show("Thanh toán thành công và đã cập nhật tồn kho!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
 
         private void hệThốngToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -709,6 +787,12 @@ namespace JazzCoffe
         private void côngThứcPhaChếToolStripMenuItem_Click(object sender, EventArgs e)
         {
             fCongThucDoUong f = new fCongThucDoUong();
+            f.ShowDialog();
+        }
+
+        private void chấmCôngToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fChamCong f = new fChamCong();
             f.ShowDialog();
         }
     }

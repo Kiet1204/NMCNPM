@@ -46,11 +46,11 @@
             // dtgvCongThucDoUong
             // 
             this.dtgvCongThucDoUong.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtgvCongThucDoUong.Location = new System.Drawing.Point(0, 266);
+            this.dtgvCongThucDoUong.Location = new System.Drawing.Point(0, 172);
             this.dtgvCongThucDoUong.Name = "dtgvCongThucDoUong";
             this.dtgvCongThucDoUong.RowHeadersWidth = 62;
             this.dtgvCongThucDoUong.RowTemplate.Height = 28;
-            this.dtgvCongThucDoUong.Size = new System.Drawing.Size(800, 325);
+            this.dtgvCongThucDoUong.Size = new System.Drawing.Size(800, 450);
             this.dtgvCongThucDoUong.TabIndex = 0;
             // 
             // menuStrip1
@@ -79,12 +79,14 @@
             this.xóaToolStripMenuItem.Name = "xóaToolStripMenuItem";
             this.xóaToolStripMenuItem.Size = new System.Drawing.Size(59, 29);
             this.xóaToolStripMenuItem.Text = "Xóa";
+            this.xóaToolStripMenuItem.Click += new System.EventHandler(this.xóaToolStripMenuItem_Click);
             // 
             // sửaToolStripMenuItem
             // 
             this.sửaToolStripMenuItem.Name = "sửaToolStripMenuItem";
             this.sửaToolStripMenuItem.Size = new System.Drawing.Size(58, 29);
             this.sửaToolStripMenuItem.Text = "Sửa";
+            this.sửaToolStripMenuItem.Click += new System.EventHandler(this.sửaToolStripMenuItem_Click);
             // 
             // label1
             // 
@@ -138,6 +140,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.SandyBrown;
             this.ClientSize = new System.Drawing.Size(800, 623);
             this.Controls.Add(this.txtSoLuongCanDung);
             this.Controls.Add(this.label3);

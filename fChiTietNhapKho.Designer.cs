@@ -33,20 +33,18 @@
             this.lblTenNV = new System.Windows.Forms.Label();
             this.lblMaPN = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.dtgvChiTietNhapKho = new System.Windows.Forms.DataGridView();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.lblMaNV = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dtgvChiTietNhapKho)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTongChiPhi
             // 
             this.lblTongChiPhi.AutoSize = true;
-            this.lblTongChiPhi.Location = new System.Drawing.Point(285, 556);
+            this.lblTongChiPhi.Location = new System.Drawing.Point(305, 286);
             this.lblTongChiPhi.Name = "lblTongChiPhi";
             this.lblTongChiPhi.Size = new System.Drawing.Size(101, 20);
             this.lblTongChiPhi.TabIndex = 32;
@@ -55,7 +53,7 @@
             // lblNgayNhap
             // 
             this.lblNgayNhap.AutoSize = true;
-            this.lblNgayNhap.Location = new System.Drawing.Point(484, 188);
+            this.lblNgayNhap.Location = new System.Drawing.Point(521, 188);
             this.lblNgayNhap.Name = "lblNgayNhap";
             this.lblNgayNhap.Size = new System.Drawing.Size(89, 20);
             this.lblNgayNhap.TabIndex = 31;
@@ -64,7 +62,7 @@
             // lblTenNV
             // 
             this.lblTenNV.AutoSize = true;
-            this.lblTenNV.Location = new System.Drawing.Point(475, 127);
+            this.lblTenNV.Location = new System.Drawing.Point(521, 127);
             this.lblTenNV.Name = "lblTenNV";
             this.lblTenNV.Size = new System.Drawing.Size(108, 20);
             this.lblTenNV.TabIndex = 29;
@@ -82,26 +80,16 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(141, 556);
+            this.label6.Location = new System.Drawing.Point(178, 286);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(121, 20);
             this.label6.TabIndex = 27;
             this.label6.Text = "TỔNG CHI PHÍ:";
             // 
-            // dtgvChiTietNhapKho
-            // 
-            this.dtgvChiTietNhapKho.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtgvChiTietNhapKho.Location = new System.Drawing.Point(0, 229);
-            this.dtgvChiTietNhapKho.Name = "dtgvChiTietNhapKho";
-            this.dtgvChiTietNhapKho.RowHeadersWidth = 62;
-            this.dtgvChiTietNhapKho.RowTemplate.Height = 28;
-            this.dtgvChiTietNhapKho.Size = new System.Drawing.Size(664, 270);
-            this.dtgvChiTietNhapKho.TabIndex = 26;
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(350, 188);
+            this.label5.Location = new System.Drawing.Point(396, 188);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(119, 20);
             this.label5.TabIndex = 25;
@@ -110,7 +98,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(316, 127);
+            this.label4.Location = new System.Drawing.Point(362, 127);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(153, 20);
             this.label4.TabIndex = 24;
@@ -156,7 +144,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(666, 635);
+            this.BackColor = System.Drawing.Color.SandyBrown;
+            this.ClientSize = new System.Drawing.Size(666, 342);
             this.Controls.Add(this.lblMaNV);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lblTongChiPhi);
@@ -164,7 +153,6 @@
             this.Controls.Add(this.lblTenNV);
             this.Controls.Add(this.lblMaPN);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.dtgvChiTietNhapKho);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label2);
@@ -172,7 +160,6 @@
             this.Name = "fChiTietNhapKho";
             this.Text = "fChiTietNhapKho";
             this.Load += new System.EventHandler(this.fChiTietNhapKho_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dtgvChiTietNhapKho)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -184,7 +171,6 @@
         private System.Windows.Forms.Label lblTenNV;
         private System.Windows.Forms.Label lblMaPN;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.DataGridView dtgvChiTietNhapKho;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;

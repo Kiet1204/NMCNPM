@@ -19,6 +19,7 @@ namespace JazzCoffe
         {
             this.HoaDons = new HashSet<HoaDon>();
             this.PhieuNhapKhoes = new HashSet<PhieuNhapKho>();
+            this.ChamCongs = new HashSet<ChamCong>();
         }
     
         public string MaNV { get; set; }
@@ -28,10 +29,13 @@ namespace JazzCoffe
         public Nullable<System.DateTime> NgayVaoLam { get; set; }
         public string MatKhau { get; set; }
         public string Quyen { get; set; }
+        public Nullable<decimal> LuongCoBanTheoGio { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HoaDon> HoaDons { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhieuNhapKho> PhieuNhapKhoes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ChamCong> ChamCongs { get; set; }
     }
 }
