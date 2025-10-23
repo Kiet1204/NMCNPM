@@ -31,10 +31,10 @@ VALUES
  '120420', N'Quản trị viên', NULL),
 
 ('NV001', N'Nguyễn Văn A', N'Nam', '0123456789', '2002-01-01', 
- '13abcc5c2a75188406a4ce39655a9f4878c352b287c9caf1c83c44b13f4f16c7', N'Nhân viên', 20000.00),
+ '123', N'Nhân viên', 20000.00),
 
 ('NV002', N'Trần Thị B', N'Nữ', '0987654321', '2002-01-05', 
- 'bef57ec7f53a6d40beb640a780a639c83bc29ac8a9816f1f6c4a2d7b9a5e4b7d', N'Nhân viên', NULL);
+ '1234', N'Nhân viên', NULL);
 
 
 -- ==========================
