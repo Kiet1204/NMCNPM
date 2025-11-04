@@ -1,71 +1,70 @@
-☕ Phần mềm Quản lý Quán Cà Phê (WinForms - C#)
-🎯 Mục đích dự án
+Phần mềm quản lý quán cà phê được xây dựng trên nền tảng C# WinForms sử dụng Entity Framework (Database-First), nhằm hỗ trợ chủ quán và nhân viên trong việc quản lý bàn, đồ uống, khách hàng, nhân viên, hóa đơn và thanh toán một cách nhanh chóng, chính xác và hiệu quả.
 
-Phần mềm Quản lý Quán Cà Phê được xây dựng nhằm hỗ trợ các chủ quán trong việc:
+Phần mềm giúp tin học hóa quy trình bán hàng, giảm sai sót trong tính tiền, tối ưu thời gian phục vụ và nâng cao trải nghiệm của khách hàng.
 
-Quản lý bàn, đồ uống, loại đồ uống, hóa đơn, khách hàng, kho nguyên liệu, nhân viên.
+Hướng dẫn clone project từ github về máy và chạy test
+Yêu cầu môi trường
+Trước khi chạy, cần cài sẵn:
 
-Hỗ trợ quy trình gọi món, tính tiền, thanh toán hóa đơn và báo cáo doanh thu, lợi nhuận.
+✅ Visual Studio 2019/2022
 
-Giúp tự động hóa các công việc thủ công, giảm sai sót và tăng hiệu quả quản lý.
+✅ SQL Server 2019/2022 + SQL Server Management Studio (SSMS)
 
-🧩 Các công nghệ chính sử dụng
-Thành phần:	Công nghệ
+✅ .NET Framework 4.8
 
-Ngôn ngữ lập trình:	C# (.NET Framework)
+✅ Entity Framework 6.0 (được cài tự động khi restore NuGet packages)
 
-Giao diện người dùng:	Windows Forms (WinForms)
+Bước 1: Mở visual studio nhấp chọn  
 
-Cơ sở dữ liệu:	Microsoft SQL Server
+Bước 2:Nhập https://github.com/Kiet1204/NMCNPM.git vào 
+Và clone
 
-ORM:	Entity Framework (Database-First)
+Bước 3: Tạo Database
+Thư mục CSDL trong repo chứa file script SQL tạo database.
+Thực hiện như sau:
+1.	Mở SQL Server Management Studio (SSMS).
+2.	Kết nối tới server.
+3.	Mở thư mục CSDL → QuanLyCafe.sql.
+4.	Mở file QuanLyCafe.sql.
+5.	Nhấn Execute (F5) để chạy script tạo database, bảng, và dữ liệu mẫu.
+6.	Sau khi chạy xong, trong mục Databases sẽ xuất hiện database tên QuanLyCafe. Nếu chưa hiện lên hãy tắc SQL Server Management Studio (SSMS) sau đó mở lại. Database sẽ hiện ra giống như hình minh họa. 
 
-IDE phát triển:	Visual Studio
+Bước 4. Kiểm tra kết nối Database
+Mở file:
+App.config
+Đảm bảo dòng sau vẫn còn:
+data source=.;
+initial catalog=QuanLyCafe;
+integrated security=True;
 
-Hệ thống quản lý: mã nguồn	Git & GitHub
+Bước 5: Khôi phục thư viện (NuGet)
+1. Cài lại hoặc kiểm tra Entity Framework
+Mở Tools → NuGet Package Manager → Package Manager Console.
+Chạy lệnh:
+Install-Package EntityFramework
+Chờ cài đặt xong, sau đó build lại.
 
-1️⃣ Yêu cầu hệ thống
+2. Kiểm tra lại các file .cs
+Trong các file như CafeModel.Context.cs, CafeModel.cs, v.v…
+→ Đảm bảo có dòng:
+using System.Data.Entity;
+Nếu thiếu thì thêm vào đầu file.
 
-Windows 10/11
+3. Làm sạch và build lại dự án
+Vào menu Build → Clean Solution
+Sau đó Build → Rebuild Solution
+Nếu build thành công, bạn sẽ thấy dòng:
+Build: 1 succeeded, 0 failed
 
-Visual Studio 2019/2022 (có cài đặt workload .NET Desktop Development)
+Bước 6: Chạy chương trình
+Nhấp chọn Start 
+Project sẽ chạy bình thường với giao diện WinForms.
+Danh sách mật khẩu-tài khoản đăng nhập khi chạy chương trình nằm trong file excel có trong thư mục CSDL khi vừa clone project về.
 
-SQL Server (hoặc SQL Server Express)
 
-.NET Framework 4.7.2 hoặc cao hơn
 
-2️⃣ Các bước cài đặt
 
-B1: Clone dự án từ GitHub
 
-git clone https://github.com/Kiet1204/NMCNPM.git
 
-B2: Mở file solution
+ình nằm trong file excel có trong thư mục CSDL khi vừa clone project về
 
-Mở file QuanLyCafe.sln trong Visual Studio.
-
-B3: Cấu hình chuỗi kết nối (Connection String)
-
-Mở file App.config
-
-Sửa lại phần:
-
-<connectionStrings>
-  <add name="QuanLyCafeEntities"
-       connectionString="metadata=res://*/QuanLyCafeModel.csdl|res://*/QuanLyCafeModel.ssdl|res://*/QuanLyCafeModel.msl;
-       provider=System.Data.SqlClient;
-       provider connection string=&quot;data source=.\SQLEXPRESS;initial catalog=QuanLyCafe;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" 
-       providerName="System.Data.EntityClient" />
-</connectionStrings>
-
-→ thay .\SQLEXPRESS bằng tên SQL Server trên máy của bạn nếu cần.
-
-B4: Khởi tạo cơ sở dữ liệu
-
-Mở SQL Server Management Studio (SSMS)
-
-Chạy file QuanLyCafe.sql (vào thư mục CSDL của project nhấn chọn QuanLyCafe) để tạo cơ sở dữ liệu và các bảng.
-
-B5: Chạy chương trình
-
-Nhấn F5 hoặc chọn Start Debugging trong Visual Studio.
