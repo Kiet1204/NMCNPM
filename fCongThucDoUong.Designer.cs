@@ -152,6 +152,7 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "fCongThucDoUong";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "fCongThucDoUong";
             this.Load += new System.EventHandler(this.fCongThucDoUong_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dtgvCongThucDoUong)).EndInit();

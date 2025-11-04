@@ -54,24 +54,51 @@ namespace JazzCoffe
         {
             if (string.IsNullOrWhiteSpace(txtTenNL.Text) || string.IsNullOrWhiteSpace(txtDonViTinh.Text))
             {
-                MessageBox.Show("Vui lòng nhập Tên nguyên liệu và Đơn vị tính!");
+                MessageBox.Show("Vui lòng nhập Tên nguyên liệu và Đơn vị tính!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            NguyenLieu nl = new NguyenLieu()
+            string tenNL = txtTenNL.Text.Trim();
+
+            // 🔹 Kiểm tra trùng tên nguyên liệu (không phân biệt hoa thường)
+            bool daTonTai = db.NguyenLieux.Any(nl => nl.TenNL.ToLower() == tenNL.ToLower());
+            if (daTonTai)
             {
-                TenNL = txtTenNL.Text,
-                DonViTinh = txtDonViTinh.Text,
+                MessageBox.Show("Nguyên liệu này đã tồn tại trong hệ thống!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 🔹 Kiểm tra số lượng tối thiểu hợp lệ
+            if (!double.TryParse(txtSLToiThieu.Text, out double sltt))
+            {
+                MessageBox.Show("Giá trị Số lượng tối thiểu không hợp lệ!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (sltt < 0)
+            {
+                MessageBox.Show("Số lượng tối thiểu không được là số âm!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 🔹 Tạo đối tượng mới
+            NguyenLieu nlMoi = new NguyenLieu()
+            {
+                TenNL = tenNL,
+                DonViTinh = txtDonViTinh.Text.Trim(),
                 SoLuongTon = 0, // mặc định ban đầu
-                SoLuongToiThieu = double.TryParse(txtSLToiThieu.Text, out double sltt) ? sltt : 10,
-                GhiChu = txtGhiChu.Text
+                SoLuongToiThieu = sltt,
+                GhiChu = txtGhiChu.Text.Trim()
             };
 
-            db.NguyenLieux.Add(nl);
+            db.NguyenLieux.Add(nlMoi);
             db.SaveChanges();
-            MessageBox.Show("Thêm nguyên liệu thành công!");
+
+            MessageBox.Show("Thêm nguyên liệu thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             LamMoi();
         }
+
+
 
         // Xóa
         private void xoaToolStripMenuItem_Click(object sender, EventArgs e)

@@ -496,7 +496,55 @@ namespace JazzCoffe
                 maNV = nv.MaNV;
             }
 
-            // 2. Lưu hóa đơn thật sự vào database
+            // 2. Kiểm tra tồn kho trước khi tạo hóa đơn
+            using (var db = new QuanLyCafeEntities2())
+            {
+                foreach (var item in danhSachChon)
+                {
+                    string maDU = item.MaDU;
+                    int soLuongDoUong = Convert.ToInt32(item.SoLuong);
+
+                    var congThucList = db.CongThucDoUongs.Where(ct => ct.MaDU == maDU).ToList();
+
+                    foreach (var ct in congThucList)
+                    {
+                        decimal soLuongDungTrongCT = Convert.ToDecimal(ct.SoLuongDung);
+                        decimal soLuongTru = Math.Round(soLuongDoUong * soLuongDungTrongCT, 4);
+
+                        var nguyenLieu = db.NguyenLieux.FirstOrDefault(nl => nl.MaNL == ct.MaNL);
+                        if (nguyenLieu != null)
+                        {
+                            decimal tonHienTai = Convert.ToDecimal(nguyenLieu.SoLuongTon);
+                            decimal tonMoi = Math.Round(tonHienTai - soLuongTru, 4);
+
+                            // 🔹 Nếu nguyên liệu đã hết hoặc không đủ => chặn thanh toán
+                            if (tonMoi < 0)
+                            {
+                                MessageBox.Show(
+                                    $"Nguyên liệu '{nguyenLieu.TenNL}' không đủ để pha chế món '{item.TenDU}'.\n" +
+                                    $"Hiện còn {tonHienTai:F4} {nguyenLieu.DonViTinh}, cần {soLuongTru:F4} {nguyenLieu.DonViTinh}.",
+                                    "Nguyên liệu không đủ",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error
+                                );
+                                return; // ❌ Dừng thanh toán
+                            }
+                            if (tonMoi == 0)
+                            {
+                                MessageBox.Show(
+                                    $"Nguyên liệu '{nguyenLieu.TenNL}' đã hết!\nKhông thể thanh toán hóa đơn này.",
+                                    "Nguyên liệu hết hàng",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error
+                                );
+                                return; // ❌ Dừng thanh toán
+                            }
+                        }
+                    }
+                }
+            }
+
+            // 3. Nếu đủ nguyên liệu -> tiến hành lưu hóa đơn và trừ tồn kho
             using (var db = new QuanLyCafeEntities2())
             {
                 HoaDon hoaDon = new HoaDon()
@@ -526,34 +574,30 @@ namespace JazzCoffe
                 hoaDon.MaKH = maHD;
                 db.SaveChanges();
 
-                // 🧩 3. Cập nhật tồn kho nguyên liệu theo công thức pha chế
-                // assuming danhSachChon items expose MaDU and SoLuong (int) or SoLuong (decimal)
+                // 🧩 4. Cập nhật tồn kho nguyên liệu
                 List<string> danhSachCanhBao = new List<string>();
 
                 foreach (var item in danhSachChon)
                 {
                     string maDU = item.MaDU;
-                    // đảm bảo soLuongDoUong là giá trị đúng (int). Nếu danhSachChon lưu decimal thì chuyển tương ứng.
                     int soLuongDoUong = Convert.ToInt32(item.SoLuong);
 
                     var congThucList = db.CongThucDoUongs.Where(ct => ct.MaDU == maDU).ToList();
 
                     foreach (var ct in congThucList)
                     {
-                        // ép kiểu sang decimal để tính chính xác
-                        decimal soLuongDungTrongCT = Convert.ToDecimal(ct.SoLuongDung); // ct.SoLuongDung nên là decimal nếu có thể
-                        decimal soLuongTru = Math.Round(soLuongDoUong * soLuongDungTrongCT, 4); // làm tròn 4 chữ số
+                        decimal soLuongDungTrongCT = Convert.ToDecimal(ct.SoLuongDung);
+                        decimal soLuongTru = Math.Round(soLuongDoUong * soLuongDungTrongCT, 4);
 
                         var nguyenLieu = db.NguyenLieux.FirstOrDefault(nl => nl.MaNL == ct.MaNL);
                         if (nguyenLieu != null)
                         {
-                            // ép kiểu SoLuongTon về decimal trước khi trừ (nếu EF model là float, cast tạm thời)
                             decimal tonHienTai = Convert.ToDecimal(nguyenLieu.SoLuongTon);
                             decimal tonMoi = Math.Round(tonHienTai - soLuongTru, 4);
 
-                            // cập nhật lại (nếu SoLuongTon là float trong model, convert lại)
-                            nguyenLieu.SoLuongTon = (float)tonMoi; // tốt nhất đổi model thành decimal (xem phần dưới)
+                            nguyenLieu.SoLuongTon = (float)tonMoi;
 
+                            // Thêm cảnh báo nếu gần hết
                             if (tonMoi <= Convert.ToDecimal(nguyenLieu.SoLuongToiThieu))
                             {
                                 string canhBao = $"- {nguyenLieu.TenNL}: còn {tonMoi:F4} {nguyenLieu.DonViTinh} (Tối thiểu: {nguyenLieu.SoLuongToiThieu})";
@@ -565,10 +609,9 @@ namespace JazzCoffe
 
                 db.SaveChanges();
 
-
-                // 🧾 4. Hiển thị form chi tiết hóa đơn
+                // 🧾 5. Hiển thị form chi tiết hóa đơn
                 fChiTietHoaDon chiTiet = new fChiTietHoaDon(
-                    maHD: maHD,
+                    maHD: hoaDon.MaHD,
                     tenNhanVien: tenNhanVien,
                     maBan: maBan.ToString(),
                     ngay: ngay,
@@ -577,7 +620,7 @@ namespace JazzCoffe
                 );
                 chiTiet.ShowDialog();
 
-                // ⚠️ 5. Hiển thị cảnh báo nếu có nguyên liệu sắp hết
+                // ⚠️ 6. Hiển thị cảnh báo nếu có nguyên liệu sắp hết
                 if (danhSachCanhBao.Count > 0)
                 {
                     string noiDung = "⚠️ Các nguyên liệu sau sắp hết, cần nhập thêm:\n\n" +
@@ -587,13 +630,13 @@ namespace JazzCoffe
                 }
             }
 
-            // 6. Xóa hóa đơn tạm
+            // 7. Xóa hóa đơn tạm
             if (hoaDonTamTheoBan.ContainsKey(maBanDangChon))
             {
                 hoaDonTamTheoBan.Remove(maBanDangChon);
             }
 
-            // 7. Đổi trạng thái bàn thành "Trống"
+            // 8. Đổi trạng thái bàn thành "Trống"
             using (var context = new QuanLyCafeEntities2())
             {
                 var ban = context.Bans.FirstOrDefault(b => b.MaBan.ToString() == maBanDangChon);
@@ -604,7 +647,7 @@ namespace JazzCoffe
                 }
             }
 
-            // 8. Làm mới giao diện
+            // 9. Làm mới giao diện
             maBanDangChon = "";
             danhSachChon.Clear();
             dtgvHoaDonTam.DataSource = null;

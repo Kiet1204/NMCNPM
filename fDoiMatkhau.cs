@@ -39,6 +39,14 @@ namespace JazzCoffe
                 return;
             }
 
+            // 🔹 Kiểm tra mật khẩu mới trùng với mật khẩu cũ
+            string hashedNew = HashPassword(newPass);
+            if (hashedNew == matKhauHienTai)
+            {
+                MessageBox.Show("Mật khẩu mới không được trùng với mật khẩu cũ!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (newPass != confirmPass)
             {
                 MessageBox.Show("Mật khẩu mới và xác nhận không khớp!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -51,7 +59,7 @@ namespace JazzCoffe
 
                 if (nhanVien != null)
                 {
-                    nhanVien.MatKhau = HashPassword(newPass); // 🔹 Mã hóa mật khẩu mới
+                    nhanVien.MatKhau = hashedNew; // 🔹 Đã mã hóa ở trên
                     db.SaveChanges();
 
                     MessageBox.Show("Đổi mật khẩu thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -63,6 +71,7 @@ namespace JazzCoffe
                 }
             }
         }
+
 
         private string HashPassword(string password)
         {

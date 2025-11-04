@@ -215,6 +215,7 @@
             this.Controls.Add(this.dtgvPhieuNhapKhoTam);
             this.Controls.Add(this.dtgvNguyenLieu);
             this.Name = "fNhapkho";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "fNhapkho";
             this.Load += new System.EventHandler(this.fNhapkho_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dtgvNguyenLieu)).EndInit();

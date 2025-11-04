@@ -112,11 +112,11 @@
             // dtgvHoaDon
             // 
             this.dtgvHoaDon.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtgvHoaDon.Location = new System.Drawing.Point(2, 124);
+            this.dtgvHoaDon.Location = new System.Drawing.Point(16, 124);
             this.dtgvHoaDon.Name = "dtgvHoaDon";
             this.dtgvHoaDon.RowHeadersWidth = 62;
             this.dtgvHoaDon.RowTemplate.Height = 28;
-            this.dtgvHoaDon.Size = new System.Drawing.Size(892, 286);
+            this.dtgvHoaDon.Size = new System.Drawing.Size(866, 286);
             this.dtgvHoaDon.TabIndex = 26;
             this.dtgvHoaDon.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgvHoaDon_CellClick);
             this.dtgvHoaDon.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgvHoaDon_CellContentClick);
@@ -143,11 +143,11 @@
             // dtgvPhieuNhapKho
             // 
             this.dtgvPhieuNhapKho.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtgvPhieuNhapKho.Location = new System.Drawing.Point(2, 531);
+            this.dtgvPhieuNhapKho.Location = new System.Drawing.Point(58, 531);
             this.dtgvPhieuNhapKho.Name = "dtgvPhieuNhapKho";
             this.dtgvPhieuNhapKho.RowHeadersWidth = 62;
             this.dtgvPhieuNhapKho.RowTemplate.Height = 28;
-            this.dtgvPhieuNhapKho.Size = new System.Drawing.Size(892, 267);
+            this.dtgvPhieuNhapKho.Size = new System.Drawing.Size(768, 267);
             this.dtgvPhieuNhapKho.TabIndex = 29;
             // 
             // label3

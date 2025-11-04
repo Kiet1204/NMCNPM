@@ -135,11 +135,11 @@
             // dtgvChamCong
             // 
             this.dtgvChamCong.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtgvChamCong.Location = new System.Drawing.Point(3, 345);
+            this.dtgvChamCong.Location = new System.Drawing.Point(0, 345);
             this.dtgvChamCong.Name = "dtgvChamCong";
             this.dtgvChamCong.RowHeadersWidth = 62;
             this.dtgvChamCong.RowTemplate.Height = 28;
-            this.dtgvChamCong.Size = new System.Drawing.Size(843, 455);
+            this.dtgvChamCong.Size = new System.Drawing.Size(940, 455);
             this.dtgvChamCong.TabIndex = 9;
             // 
             // btnSua
@@ -209,7 +209,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SandyBrown;
-            this.ClientSize = new System.Drawing.Size(846, 800);
+            this.ClientSize = new System.Drawing.Size(941, 800);
             this.Controls.Add(this.dtpGioRa);
             this.Controls.Add(this.dtpGioVao);
             this.Controls.Add(this.dtpNgayLam);
@@ -229,6 +229,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cbMaNV);
             this.Name = "fChamCong";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "fChamCong";
             this.Load += new System.EventHandler(this.fChamCong_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dtgvChamCong)).EndInit();

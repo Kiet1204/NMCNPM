@@ -100,6 +100,20 @@ namespace JazzCoffe
 
         private void thêmToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // 🔹 Kiểm tra nhập liệu trước
+            if (string.IsNullOrWhiteSpace(txtMaNV.Text) ||
+                string.IsNullOrWhiteSpace(txtTenNV.Text) ||
+                string.IsNullOrWhiteSpace(txtSDT.Text) ||
+                string.IsNullOrWhiteSpace(cbChucVu.Text) ||
+                string.IsNullOrWhiteSpace(txtLuongCoBan.Text))
+            {
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin nhân viên trước khi thêm!",
+                                "Thiếu thông tin",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                return;
+            }
+
             try
             {
                 string maNV = txtMaNV.Text.Trim();
@@ -107,7 +121,16 @@ namespace JazzCoffe
                 string sdt = txtSDT.Text.Trim();
                 string quyen = cbChucVu.Text;
                 decimal luong = 0;
-                decimal.TryParse(txtLuongCoBan.Text, out luong);
+
+                // 🔹 Kiểm tra lương có hợp lệ không
+                if (!decimal.TryParse(txtLuongCoBan.Text, out luong) || luong <= 0)
+                {
+                    MessageBox.Show("Vui lòng nhập lương hợp lệ (số dương)!",
+                                    "Giá trị không hợp lệ",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Warning);
+                    return;
+                }
 
                 // 🔹 Mã hóa mật khẩu mặc định là "123"
                 string matKhauMaHoa = HashPassword("123");
@@ -128,13 +151,20 @@ namespace JazzCoffe
                 db.SaveChanges();
 
                 LoadData();
-                MessageBox.Show("Thêm nhân viên thành công! Mật khẩu mặc định là 123 (đã mã hóa).");
+                MessageBox.Show("Thêm nhân viên thành công!\nMật khẩu mặc định là 123 (đã mã hóa).",
+                                "Thành công",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi thêm: " + ex.Message);
+                MessageBox.Show("Lỗi khi thêm: " + ex.Message,
+                                "Lỗi",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
             }
         }
+
 
         private void sửaToolStripMenuItem_Click(object sender, EventArgs e)
         {

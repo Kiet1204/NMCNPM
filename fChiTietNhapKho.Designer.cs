@@ -39,12 +39,14 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.lblMaNV = new System.Windows.Forms.Label();
+            this.dtgvChiTietPhieuNhap = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dtgvChiTietPhieuNhap)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTongChiPhi
             // 
             this.lblTongChiPhi.AutoSize = true;
-            this.lblTongChiPhi.Location = new System.Drawing.Point(305, 286);
+            this.lblTongChiPhi.Location = new System.Drawing.Point(300, 504);
             this.lblTongChiPhi.Name = "lblTongChiPhi";
             this.lblTongChiPhi.Size = new System.Drawing.Size(101, 20);
             this.lblTongChiPhi.TabIndex = 32;
@@ -80,7 +82,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(178, 286);
+            this.label6.Location = new System.Drawing.Point(173, 504);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(121, 20);
             this.label6.TabIndex = 27;
@@ -140,12 +142,23 @@
             this.lblMaNV.TabIndex = 34;
             this.lblMaNV.Text = "MaNV";
             // 
+            // dtgvChiTietPhieuNhap
+            // 
+            this.dtgvChiTietPhieuNhap.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dtgvChiTietPhieuNhap.Location = new System.Drawing.Point(0, 238);
+            this.dtgvChiTietPhieuNhap.Name = "dtgvChiTietPhieuNhap";
+            this.dtgvChiTietPhieuNhap.RowHeadersWidth = 62;
+            this.dtgvChiTietPhieuNhap.RowTemplate.Height = 28;
+            this.dtgvChiTietPhieuNhap.Size = new System.Drawing.Size(666, 252);
+            this.dtgvChiTietPhieuNhap.TabIndex = 35;
+            // 
             // fChiTietNhapKho
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SandyBrown;
-            this.ClientSize = new System.Drawing.Size(666, 342);
+            this.ClientSize = new System.Drawing.Size(666, 552);
+            this.Controls.Add(this.dtgvChiTietPhieuNhap);
             this.Controls.Add(this.lblMaNV);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lblTongChiPhi);
@@ -160,6 +173,7 @@
             this.Name = "fChiTietNhapKho";
             this.Text = "fChiTietNhapKho";
             this.Load += new System.EventHandler(this.fChiTietNhapKho_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dtgvChiTietPhieuNhap)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -177,5 +191,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblMaNV;
+        private System.Windows.Forms.DataGridView dtgvChiTietPhieuNhap;
     }
 }
