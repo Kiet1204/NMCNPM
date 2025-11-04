@@ -1,3 +1,7 @@
+Phần mềm quản lý quán cà phê được xây dựng trên nền tảng C# WinForms sử dụng Entity Framework (Database-First), nhằm hỗ trợ chủ quán và nhân viên trong việc quản lý bàn, đồ uống, khách hàng, nhân viên, hóa đơn và thanh toán một cách nhanh chóng, chính xác và hiệu quả.
+
+Phần mềm giúp tin học hóa quy trình bán hàng, giảm sai sót trong tính tiền, tối ưu thời gian phục vụ và nâng cao trải nghiệm của khách hàng.
+
 Hướng dẫn clone project từ github về máy và chạy test
 Yêu cầu môi trường
 Trước khi chạy, cần cài sẵn:
