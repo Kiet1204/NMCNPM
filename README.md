@@ -1,10 +1,14 @@
 Hướng dẫn clone project từ github về máy và chạy test
 Yêu cầu môi trường
 Trước khi chạy, cần cài sẵn:
-•	✅ Visual Studio 2019/2022
-•	✅ SQL Server 2019/2022 + SQL Server Management Studio (SSMS)
-•	✅ .NET Framework 4.8
-•	✅ Entity Framework 6.0 (được cài tự động khi restore NuGet packages)
+
+✅ Visual Studio 2019/2022
+
+✅ SQL Server 2019/2022 + SQL Server Management Studio (SSMS)
+
+✅ .NET Framework 4.8
+
+✅ Entity Framework 6.0 (được cài tự động khi restore NuGet packages)
 
 Bước 1: Mở visual studio nhấp chọn  
 
